@@ -1,25 +1,44 @@
-import { BotCommandWithHandler } from '@/types/bot';
 import { Context, Telegraf } from 'telegraf';
+
+import { BotCommandWithHandler } from '@/types/bot';
+import logger from '@/utils/logger';
+
+import { CHAT_WHITELIST } from './whitelist';
 
 const START: BotCommandWithHandler = {
   command: 'start',
   description: 'Start command',
   handler: (ctx: Context) => {
-    console.log(ctx);
+    logger.info('START command received', ctx.message);
+    ctx.reply('Hello world!');
   },
 };
 const HELP: BotCommandWithHandler = {
   command: 'help',
   description: 'List all commands and their description',
   handler: (ctx: Context) => {
-    console.log(ctx);
+    logger.info('HELP command received', ctx);
+    ctx.reply('This is the help list!');
   },
 };
 const LOG: BotCommandWithHandler = {
   command: 'log',
   description: 'Enables logging',
   handler: (ctx: Context) => {
-    console.log(ctx);
+    logger.info('LOG command received');
+    // Message received from a chat
+    if (ctx.message) {
+      const { id } = ctx.message.chat;
+
+      CHAT_WHITELIST.add(id);
+      ctx.reply(
+        `Chat with id"${id}" added to the whitelist! From now on you will receive all logs!`
+      );
+    } else {
+      // Message couldn't be used to retrieve chat id
+      logger.info("Message couldn't be used to retrieve chat id");
+      ctx.reply(`Chat cannot be added to whitelist!`);
+    }
   },
 };
 
