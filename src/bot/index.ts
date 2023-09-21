@@ -2,10 +2,32 @@ import { Telegraf } from 'telegraf';
 
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
+import watcher from '@/watcher';
 
 import { addCommands } from './commands';
 
 const bot = new Telegraf(BOT_TOKEN);
+
+/**
+ * Executes cleanup tasks and stops the bot when the process receives a signal
+ * @param signal NodeJS script termination signal
+ * @returns Function to be called when the signal is received
+ */
+const handleSignal = async (
+  signal: Extract<NodeJS.Signals, 'SIGTERM' | 'SIGINT'>
+) => {
+  process.once(signal, async () => {
+    try {
+      logger.info(`${signal} received, stopping bot and watcher.`);
+      // Stops bot and watcher
+      bot.stop(signal);
+      await watcher.stop();
+      logger.info('Both watcher and bot stopped successfully!');
+    } catch (e) {
+      logger.error('An error ocurred while stopping the app!', e);
+    }
+  });
+};
 
 /**
  * Register commands and handlers
@@ -18,21 +40,15 @@ const register = async () => {
 /**
  * Start bot
  */
-const start = async () => {
+const start = () => {
   logger.info('Starting bot...');
   // Launch bot
-  await bot.launch();
+  bot.launch();
   logger.info('Bot started!');
 
   // Enable graceful stop
-  process.once('SIGINT', () => {
-    logger.info('SIGINT received, bot stopped!');
-    bot.stop('SIGINT');
-  });
-  process.once('SIGTERM', () => {
-    logger.info('SIGTERM received, bot stopped!');
-    bot.stop('SIGTERM');
-  });
+  handleSignal('SIGINT');
+  handleSignal('SIGTERM');
 };
 
 const controls = {
