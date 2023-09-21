@@ -1,7 +1,8 @@
-import type { FileChangeInfo } from 'node:fs/promises';
+import type { Stats } from 'fs';
 
 export type WatcherCallbackEvent = {
-  event: FileChangeInfo<string>;
+  event?: Stats;
   content: string;
+  path: string;
 };
 export type WatcherCallback = (event: WatcherCallbackEvent) => void;
