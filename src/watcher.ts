@@ -3,8 +3,8 @@ import fs from 'node:fs';
 
 import type { WatcherCallback } from '@/types/watcher';
 import logger from '@/utils/logger';
-
-import { LOGFILE_PATH } from './utils/config';
+import { LOGFILE_PATH } from '@/utils/config';
+import { getNewLines, initializeLines } from '@/utils/file';
 
 let watcher: chokidar.FSWatcher | null = null;
 
@@ -13,13 +13,22 @@ let watcher: chokidar.FSWatcher | null = null;
  * @param callback Callback function to be called when the file is updated
  */
 const start = (callback: WatcherCallback) => {
-  watcher = chokidar.watch(LOGFILE_PATH);
+  // Store initial lines count
+  initializeLines(LOGFILE_PATH);
+
+  // Initialize watcher
+  watcher = chokidar.watch(LOGFILE_PATH, {
+    alwaysStat: true,
+    ignoreInitial: true,
+  });
 
   // Register events
   watcher.on('change', (path, event) => {
     logger.info(`File "${LOGFILE_PATH}" changed`);
     const content = fs.readFileSync(LOGFILE_PATH, 'utf-8');
-    callback({ path, event, content });
+
+    const newLines = getNewLines(content);
+    callback({ path, event, content, newLines });
   });
 };
 
