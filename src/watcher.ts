@@ -1,40 +1,35 @@
-import fs from 'node:fs/promises';
+import chokidar from 'chokidar';
+import fs from 'node:fs';
 
 import type { WatcherCallback } from '@/types/watcher';
 import logger from '@/utils/logger';
 
 import { LOGFILE_PATH } from './utils/config';
 
-const ac = new AbortController();
+let watcher: chokidar.FSWatcher | null = null;
 
 /**
- * Watches for changes in the log file, and executes a function when the file is updated
+ * Starts the watcher
  * @param callback Callback function to be called when the file is updated
  */
-const watch = async (callback?: WatcherCallback) => {
-  try {
-    // Start watcher
-    const watcher = fs.watch(LOGFILE_PATH, { signal: ac.signal });
+const start = (callback: WatcherCallback) => {
+  watcher = chokidar.watch(LOGFILE_PATH);
 
-    // Log new lines when the file is updated
-    for await (const event of watcher) {
-      const content = await fs.readFile(LOGFILE_PATH, 'utf-8');
-
-      logger.info(event);
-      callback && callback({ event, content });
-    }
-  } catch (e) {
-    if (e instanceof Error && e.name === 'AbortError') {
-      logger.info('Aborted');
-    }
-  }
+  // Register events
+  watcher.on('change', (path, event) => {
+    logger.info(`File "${LOGFILE_PATH}" changed`);
+    const content = fs.readFileSync(LOGFILE_PATH, 'utf-8');
+    callback({ path, event, content });
+  });
 };
 
 /**
  * Stops the watcher
  */
-export const stopWatching = () => {
-  ac.abort();
-};
+const stop = () => watcher?.close();
 
-export default watch;
+const controls = {
+  start,
+  stop,
+};
+export default controls;
