@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "npm run build && node dist/index.js",
+    "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json -s ./src",
+    "start": "npm run build && dotenv node dist/index.js",
     "release": "dotenv release-it ",
     "release:ci": "dotenv release-it --ci",
     "prepare": "husky install",
@@ -35,6 +35,7 @@
     "husky": "^8.0.3",
     "prettier": "3.0.3",
     "release-it": "^16.1.5",
+    "tsconfig-replace-paths": "^0.0.14",
     "typescript": "^5.2.2"
   },
   "dependencies": {
