@@ -5,8 +5,19 @@ import logger from '@/utils/logger';
 import watcher from '@/watcher';
 
 import { addCommands } from './commands';
+import { CHAT_WHITELIST } from './whitelist';
 
 const bot = new Telegraf(BOT_TOKEN);
+
+/**
+ * Sends the given message to all whitelisted users
+ * @param message Message to be sent to whitelisted users
+ */
+const sendToWhitelisted = async (message: string) => {
+  for (const user of CHAT_WHITELIST.list) {
+    await bot.telegram.sendMessage(user, message);
+  }
+};
 
 /**
  * Executes cleanup tasks and stops the bot when the process receives a signal
@@ -54,5 +65,6 @@ const start = () => {
 const controls = {
   register,
   start,
+  sendToWhitelisted,
 };
 export default controls;
