@@ -1,4 +1,4 @@
-import logger from 'logger';
+import logger from '@/utils/logger';
 
 /**
  * @description Checks if an environment variable exists
@@ -18,3 +18,8 @@ function checkVariable(identifier: string) {
  * @description Bot token from BotFather
  */
 export const BOT_TOKEN = checkVariable('BOT_TOKEN');
+
+/**
+ * @description Path to the log file
+ */
+export const LOGFILE_PATH = checkVariable('LOGFILE_PATH');
