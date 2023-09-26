@@ -25,9 +25,13 @@ const LOG: BotCommandWithHandler = {
   command: 'log',
   description: 'Enables logging',
   handler: (ctx: Context) => {
+    const { message } = ctx;
+    logger.info(
+      `Received '/log' command from ${message?.chat.type} (${message?.chat?.id}). Added to whitelist.`
+    );
     // Message received from a chat
-    if (ctx.message) {
-      const { id } = ctx.message.chat;
+    if (message) {
+      const { id } = message.chat;
 
       CHAT_WHITELIST.add(id);
       ctx.reply(
