@@ -25,7 +25,6 @@ const LOG: BotCommandWithHandler = {
   command: 'log',
   description: 'Enables logging',
   handler: (ctx: Context) => {
-    logger.info('LOG command received');
     // Message received from a chat
     if (ctx.message) {
       const { id } = ctx.message.chat;

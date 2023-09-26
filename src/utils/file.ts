@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import logger from './logger';
 
 /**
  * Total lines count of the file
@@ -20,7 +19,6 @@ export const getLinesCount = (content: string): number =>
  */
 export const initializeLines = (path: string) => {
   lines = getLinesCount(fs.readFileSync(path, 'utf-8'));
-  logger.info('Initial lines: ', lines);
 };
 
 /**
@@ -34,7 +32,6 @@ export const getNewLines = (content: string): string[] => {
 
   // Store new lines count, even if lines were removed
   lines = newFileLinesCount;
-  logger.info('diff: ', diff);
   // Nothing changed or lines were removed
   if (diff <= 0) return [];
 
