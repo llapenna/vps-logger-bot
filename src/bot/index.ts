@@ -15,7 +15,8 @@ const bot = new Telegraf(BOT_TOKEN);
  */
 const sendToWhitelisted = async (message: string) => {
   for (const user of CHAT_WHITELIST.list) {
-    await bot.telegram.sendMessage(user, message);
+    const msg = message === '' ? 'Empty message 😅' : message;
+    await bot.telegram.sendMessage(user, msg);
   }
 };
 
