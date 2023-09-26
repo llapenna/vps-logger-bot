@@ -1,0 +1,5 @@
+{
+  "attemp": "An attempt to access '$user$' was made from '$ip$:$port$'",
+  "login": "User '$user$' logged in from '$ip$' at server port '$port$'",
+  "disconnected": "Disconnected user '$user$' from '$ip$:$port$'"
+}
