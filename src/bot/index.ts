@@ -13,7 +13,7 @@ const bot = new Telegraf(BOT_TOKEN);
  * Sends the given message to all whitelisted users
  * @param message Message to be sent to whitelisted users
  */
-const sendToWhitelisted = async (message: string) => {
+const broadcastMessage = async (message: string) => {
   for (const user of CHAT_WHITELIST.list) {
     const msg = message === '' ? 'Empty message 😅' : message;
     await bot.telegram.sendMessage(user, msg);
@@ -66,6 +66,6 @@ const start = () => {
 const controls = {
   register,
   start,
-  sendToWhitelisted,
+  broadcastMessage,
 };
 export default controls;
