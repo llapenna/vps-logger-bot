@@ -18,7 +18,7 @@ const broadcastMessage = async (message: string) => {
   const processed = processMessage.process(message);
   if (message !== '' && processed) {
     for (const user of CHAT_WHITELIST.list) {
-      await bot.telegram.sendMessage(user, message);
+      await bot.telegram.sendMessage(user, processed);
     }
   }
 };
