@@ -53,12 +53,13 @@ const process = (message: string) => {
   const removed = removeLogPrefix(message);
 
   if (!removed)
-    return logger.info('File changed, but the message cannot be processed');
+    return logger.info('File changed, but the message cannot be processed.');
 
   if (removed.includes('Accepted publickey')) return processLogin(removed);
   else if (removed.includes('Invalid user')) return processAttemp(removed);
   else if (removed.includes('Disconnected from user'))
     return processDisconnect(removed);
+  else logger.info('File changed, but the message is not supported.');
 };
 
 const message = {
