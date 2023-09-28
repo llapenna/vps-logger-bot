@@ -2,7 +2,6 @@ import chokidar from 'chokidar';
 import fs from 'node:fs';
 
 import type { WatcherCallback } from '@/types/watcher';
-import logger from '@/utils/logger';
 import { LOGFILE_PATH } from '@/utils/config';
 import { getNewLines, initializeLines } from '@/utils/file';
 
@@ -24,7 +23,6 @@ const start = (callback: WatcherCallback) => {
 
   // Register events
   watcher.on('change', (path, event) => {
-    logger.info(`File "${LOGFILE_PATH}" changed`);
     const content = fs.readFileSync(LOGFILE_PATH, 'utf-8');
 
     const newLines = getNewLines(content);

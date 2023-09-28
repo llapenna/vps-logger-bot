@@ -1,4 +1,5 @@
 import messages from '@/assets/message.json';
+import logger from './logger';
 
 const removeLogPrefix = (message: string) =>
   message && message.split(/\[[0-9]+\]: /)[1];
@@ -50,6 +51,9 @@ const processDisconnect = (message: string): string => {
 
 const process = (message: string) => {
   const removed = removeLogPrefix(message);
+
+  if (!removed)
+    return logger.info('File changed, but the message cannot be processed');
 
   if (removed.includes('Accepted publickey')) return processLogin(removed);
   else if (removed.includes('Invalid user')) return processAttemp(removed);
