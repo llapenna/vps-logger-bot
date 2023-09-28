@@ -9,8 +9,10 @@ import logger from '@/utils/logger';
   // Watch for changes in the file
   watcher.start(({ newLines }) => {
     if (newLines) {
-      bot.broadcastMessage(newLines?.join('\n'));
-      logger.info(newLines);
+      newLines.forEach((line) => {
+        bot.broadcastMessage(line);
+        logger.info(line);
+      });
     }
   });
 
