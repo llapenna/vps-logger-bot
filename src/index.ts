@@ -1,6 +1,5 @@
 import bot from '@/bot';
 import watcher from '@/watcher';
-import logger from '@/utils/logger';
 
 (async () => {
   // Configure bot
@@ -11,7 +10,6 @@ import logger from '@/utils/logger';
     if (newLines) {
       newLines.forEach((line) => {
         bot.broadcastMessage(line);
-        logger.info(line);
       });
     }
   });
