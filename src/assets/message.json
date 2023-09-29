@@ -1,5 +1,47 @@
-{
-  "attemp": "An attempt to access '$user$' was made from '$ip$:$port$'",
-  "login": "User '$user$' logged in from '$ip$' using client port '$port$'",
-  "disconnected": "Disconnected user '$user$' from '$ip$:$port$'"
-}
+[
+  {
+    "pattern": "Disconnected from invalid user ",
+    "response": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
+    "positions": {
+      "user": 0,
+      "ip": 1
+    },
+    "example": "Sep 28 20:54:59 ... sshd[166101]: Disconnected from invalid user $user$ $ip$ port ... [preauth]"
+  },
+  {
+    "pattern": "Connection closed by invalid user ",
+    "response": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
+    "positions": {
+      "user": 0,
+      "ip": 1
+    },
+    "example": "Sep 28 21:12:00 ... sshd[166101]: Connection closed by invalid user $user$ $ip$ port ... [preauth]"
+  },
+  {
+    "pattern": "Connection closed by authenticating user ",
+    "response": "A failed attempt to access user '$user$' was made from '$ip$'.",
+    "positions": {
+      "user": 0,
+      "ip": 1
+    },
+    "example": "Sep 28 21:13:06 ... sshd[...]: Connection closed by authenticating user $user$ $ip$ port ... [preauth]"
+  },
+  {
+    "pattern": "Accepted publickey for ",
+    "response": "User '$user$' logged in from '$ip$'.",
+    "positions": {
+      "user": 0,
+      "ip": 2
+    },
+    "example": "Sep 28 19:47:33 ... sshd[...]: Accepted publickey for $user$ from $ip$ port ... ssh2: ED25519 SHA256:..."
+  },
+  {
+    "pattern": "Disconnected from user ",
+    "response": "Authenticated user '$user$' from '$ip$' disconnected.",
+    "positions": {
+      "user": 0,
+      "ip": 1
+    },
+    "example": "Sep 28 19:47:28 ... sshd[...]: Disconnected from user $user$ $ip$ port ..."
+  }
+]
