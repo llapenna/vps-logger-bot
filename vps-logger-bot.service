@@ -1,0 +1,14 @@
+[Unit]
+Description=index.js - Telegram auth.log bot
+After=network.target
+
+[Service]
+Environment=LOGFILE_PATH=/var/log/auth.log
+Environment=BOT_TOKEN=6476762293:AAHtFN_QOh2duBaWieg3WSkjj1gZeXZTSfc
+Type=simple
+User=losha
+ExecStart=/snap/bin/node /home/losha/apps/vps-logger-bot/dist/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
