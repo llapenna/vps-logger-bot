@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf';
 
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
-import processMessage from '@/utils/message';
+import msg from '@/utils/message';
 import watcher from '@/watcher';
 
 import { addCommands } from './commands';
@@ -15,8 +15,8 @@ const bot = new Telegraf(BOT_TOKEN);
  * @param message Message to be sent to whitelisted users
  */
 const broadcastMessage = async (message: string) => {
-  const processed = processMessage.process(message);
-  if (message !== '' && processed) {
+  const processed = msg.process(message);
+  if (processed) {
     for (const user of CHAT_WHITELIST.list) {
       await bot.telegram.sendMessage(user, processed);
     }
