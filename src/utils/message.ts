@@ -1,65 +1,79 @@
 import messages from '@/assets/message.json';
+import type { Message } from '@/types/message';
 import logger from './logger';
 
-const removeLogPrefix = (message: string) =>
-  message && message.split(/\[[0-9]+\]: /)[1];
-
 /**
- * Process an 'attemp' line and returns a formatted message to be sent to the user
- * @param message Message to be processed
- * @returns Formatted message
+ * Splits the line into two, returning the part where the tokens are located
+ * @param line Line to be processed
+ * @param message Pattern used to extract the tokens
+ * @returns Array of strings, containing the tokens
  */
-const processAttemp = (message: string): string => {
-  const splitted = message.split(' ');
-  const [user, , ip, , port] = splitted.slice(2);
-
-  return messages.attemp
-    .replace('$user$', user)
-    .replace('$ip$', ip)
-    .replace('$port$', port);
+const extractFromPattern = (line: string, { pattern }: Message) => {
+  if (line) {
+    return line.split(pattern)[1].split(' ');
+  } else return null;
 };
 
 /**
- * Process a 'login' line and returns a formatted message to be sent to the user
- * @param message Message to be processed
- * @returns Formatted message
+ * Extracts the tokens from the line
+ * @param line Line to be processed
+ * @param message Message containing information about the tokens (name and position)
+ * @returns Object containing the tokens and its values
  */
-const processLogin = (message: string): string => {
-  const splitted = message.split(' ');
-  const [user, , ip, , port] = splitted.slice(3);
+const extractToken = (line: string[], message: Message) => {
+  let obj: Record<string, string> = {};
+  Object.entries(message.positions).forEach(([key, value]) => {
+    obj = { ...obj, [key]: line[value] };
+  });
 
-  return messages.login
-    .replace('$user$', user)
-    .replace('$ip$', ip)
-    .replace('$port$', port);
+  return obj;
 };
 
 /**
- * Process a 'disconnect' line and returns a formatted message to be sent to the user
- * @param message Message to be processed
+ * Replaces the tokens in the message with the values
+ * @param tokens Object containing the tokens and its values
+ * @param message Message containing the response to be sent to the user
  * @returns Formatted message
  */
-const processDisconnect = (message: string): string => {
-  const splitted = message.split(' ');
-  const [user, ip, , port] = splitted.slice(3);
+const replaceToken = (tokens: Record<string, string>, message: Message) => {
+  let str = message.response;
 
-  return messages.disconnected
-    .replace('$user$', user)
-    .replace('$ip$', ip)
-    .replace('$port$', port);
+  Object.entries(tokens).forEach(([key, value]) => {
+    str = str.replace(`$${key}$`, value);
+  });
+
+  return str;
 };
 
-const process = (message: string) => {
-  const removed = removeLogPrefix(message);
+/**
+ * Retrieves the correct message based on the provided patterns
+ * @param line Line to be processed
+ * @returns The message found or null if no message matched
+ */
+const filterPatterns = (line: string) => {
+  for (const msg of messages) {
+    if (line.includes(msg.pattern)) return msg;
+  }
 
-  if (!removed)
-    return logger.info('File changed, but the message cannot be processed.');
+  return null;
+};
 
-  if (removed.includes('Accepted publickey')) return processLogin(removed);
-  else if (removed.includes('Invalid user')) return processAttemp(removed);
-  else if (removed.includes('Disconnected from user'))
-    return processDisconnect(removed);
-  else logger.info('File changed, but the message is not supported.');
+/**
+ *  Process a line and returns a formatted message to be sent to the user
+ * @param line Line to be processed
+ * @returns String response
+ */
+export const process = (line: string) => {
+  const message = filterPatterns(line);
+  if (!message) return null;
+
+  const extracted = extractFromPattern(line, message);
+  if (!extracted) return null;
+
+  const tokenized = extractToken(extracted, message);
+  const response = replaceToken(tokenized, message);
+  logger.info(`Sending '${response}' to whitelisted users.`);
+  return replaceToken(tokenized, message);
 };
 
 const message = {
