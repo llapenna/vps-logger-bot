@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 
 const prefix = (type: 'INFO' | 'ERROR' | 'WARN') =>
   `[${new Date().toLocaleString()} - ${type}]:`;
