@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 
-const prefix = (type: 'INFO' | 'ERROR' | 'WARN') =>
-  `[${new Date().toLocaleString()} - ${type}]:`;
+const priorities = {
+  ERROR: 3,
+  WARN: 4,
+  INFO: 6,
+};
+
+const prefix = (type: keyof typeof priorities) =>
+  `<${priorities[type]}> [${new Date().toLocaleString()} - ${type}]:`;
 
 /**
  * Interface for `console.log`. Won't print on 'production' mode
