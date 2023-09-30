@@ -1,5 +1,5 @@
 [Unit]
-Description=index.js - Telegram auth.log bot
+Description=Telegram auth.log bot
 After=network.target
 
 [Service]
@@ -7,7 +7,8 @@ Environment=LOGFILE_PATH=log.txt
 Environment=BOT_TOKEN=123abc
 Type=simple
 User=losha
-ExecStart=/snap/bin/node /home/losha/apps/vps-logger-bot/dist/index.js
+WorkingDirectory=/home/someuser
+ExecStart=/snap/bin/node /path/to/index.js
 Restart=on-failure
 
 [Install]
