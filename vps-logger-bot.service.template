@@ -9,8 +9,8 @@ Environment=LOGFILE_PATH=_LOGFILE_PATH
 Environment=BOT_TOKEN=_BOT_TOKEN
 Type=simple
 User=root
-WorkingDirectory=/home/someuser
-ExecStart=/snap/bin/node /path/to/start.sh
+WorkingDirectory=_WORKDIR
+ExecStart=/snap/bin/node _PROJECT_PATH/scripts/start.sh
 Restart=on-failure
 
 [Install]
