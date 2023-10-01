@@ -3,8 +3,10 @@ Description=Telegram auth.log bot
 After=network.target
 
 [Service]
-Environment=LOGFILE_PATH=log.txt
-Environment=BOT_TOKEN=123abc
+# Path to the file to be used for logging
+Environment=LOGFILE_PATH=_LOGFILE_PATH
+# Bot token provided by Bot Father
+Environment=BOT_TOKEN=_BOT_TOKEN
 Type=simple
 User=root
 WorkingDirectory=/home/someuser
