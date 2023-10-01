@@ -6,9 +6,9 @@ After=network.target
 Environment=LOGFILE_PATH=log.txt
 Environment=BOT_TOKEN=123abc
 Type=simple
-User=losha
+User=root
 WorkingDirectory=/home/someuser
-ExecStart=/snap/bin/node /path/to/index.js
+ExecStart=/snap/bin/node /path/to/start.sh
 Restart=on-failure
 
 [Install]
