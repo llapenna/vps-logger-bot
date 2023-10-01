@@ -18,11 +18,11 @@ echo "✅ Replaced!\n"
 
 # Reload daemon
 echo "🔄 Reloading daemon..."
-sudo systemctl daemon-reload
+systemctl daemon-reload
 echo "✅ Reloaded!\n"
 
 # Enable and start service
 echo "🔄 Starting and enabling service..."
-sudo systemctl enable vps-logger-bot
-sudo systemctl start vps-logger-bot
+systemctl enable vps-logger-bot
+systemctl start vps-logger-bot
 echo "✅ Started and enabled!\n"
