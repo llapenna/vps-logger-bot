@@ -1,17 +1,24 @@
 [Unit]
-Description=Telegram auth.log bot
+Description=Telegram `auth.log` bot
+Documentation=https://github.com/llapenna/vps-logger-bot
 After=network.target
 
 [Service]
+Type=simple
 # Path to the file to be used for logging
 Environment=LOGFILE_PATH=_LOGFILE_PATH
 # Bot token provided by Bot Father
 Environment=BOT_TOKEN=_BOT_TOKEN
-Type=simple
-User=root
 WorkingDirectory=_WORKDIR
-ExecStart=/snap/bin/node _PROJECT_PATH/scripts/start.sh
+ExecStart=/snap/bin/node _PROJECT_PATH/dist/index.js
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
 Restart=on-failure
+
+# Logging
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs-vps-logger-bot
 
 [Install]
 WantedBy=multi-user.target
