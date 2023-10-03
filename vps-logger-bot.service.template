@@ -10,6 +10,8 @@ Type=simple
 Environment=LOGFILE_PATH=_LOGFILE_PATH
 # Bot token provided by Bot Father
 Environment=BOT_TOKEN=_BOT_TOKEN
+# Enables production mode
+Environment=NODE_ENV=production
 
 ExecStart=/snap/bin/node _PROJECT_PATH/dist/index.js
 
