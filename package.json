@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json -s ./src",
-    "install-service": "dotenv scripts/install_service.sh",
+    "install": "dotenv scripts/install_service.sh",
     "start": "npm run build && dotenv node dist/index.js",
     "release": "dotenv release-it ",
     "release:ci": "dotenv release-it --ci",
