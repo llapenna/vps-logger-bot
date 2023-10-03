@@ -16,6 +16,11 @@ echo "🔄 Replacing env variables values..."
 sed -i.bak -e s@_LOGFILE_PATH@$LOGFILE_PATH@g -e s@_BOT_TOKEN@$BOT_TOKEN@g -e s@_WORKDIR@$HOME@g -e s@_PROJECT_PATH@$PROJECT_PATH@g $SERVICE_PATH/vps-logger-bot.service
 echo "✅ Replaced!\n"
 
+# Build the project
+echo "🔄 Building project..."
+npm run build
+echo "✅ Built!\n"
+
 # Reload daemon
 echo "🔄 Reloading daemon..."
 systemctl daemon-reload
