@@ -22,7 +22,7 @@ git clone git@github.com:llapenna/vps-logger-bot.git
 npm ci
 ```
 
-3. Create a `.env` file with the following content:
+3. Create a `.env`, using the `.env.template` file as a base:
 
 ```bash
 # Used by the application to work properly
@@ -32,6 +32,8 @@ LOGFILE_PATH="/var/log/auth.log"
 SERVICE_PATH="/etc/systemd/system"
 PROJECT_PATH="path/to/project/root"
 ```
+
+> 💡 You can get a Telegram bot token by talking to [@BotFather](https://t.me/BotFather)
 
 4. Install the bot's service
   
