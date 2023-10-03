@@ -36,7 +36,7 @@ PROJECT_PATH="path/to/project/root"
 4. Install the bot's service
   
 ```bash
-npm run install
+npm run install-service
 ```
 
 > 💡 Super user privileges may be required to install the service. Try running the script using `sudo`
