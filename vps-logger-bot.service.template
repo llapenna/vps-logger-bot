@@ -5,12 +5,14 @@ After=network.target
 
 [Service]
 Type=simple
+
 # Path to the file to be used for logging
 Environment=LOGFILE_PATH=_LOGFILE_PATH
 # Bot token provided by Bot Father
 Environment=BOT_TOKEN=_BOT_TOKEN
-WorkingDirectory=_WORKDIR
+
 ExecStart=/snap/bin/node _PROJECT_PATH/dist/index.js
+
 # Restart service after 10 seconds if node service crashes
 RestartSec=10
 Restart=on-failure
@@ -18,7 +20,7 @@ Restart=on-failure
 # Logging
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=nodejs-vps-logger-bot
+SyslogIdentifier=vps-logger-bot
 
 [Install]
 WantedBy=multi-user.target
