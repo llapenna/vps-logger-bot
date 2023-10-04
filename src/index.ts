@@ -3,7 +3,7 @@ import watcher from '@/watcher';
 
 (async () => {
   // Configure bot
-  await bot.register();
+  await bot.registerCommands();
 
   // Watch for changes in the file
   watcher.start(({ newLines }) => {

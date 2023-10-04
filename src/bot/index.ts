@@ -47,7 +47,7 @@ const handleSignal = async (
 /**
  * Register commands and handlers
  */
-const register = async () => {
+const registerCommands = async () => {
   // Register handlers
   await addCommands(bot);
 };
@@ -67,7 +67,7 @@ const start = () => {
 };
 
 const controls = {
-  register,
+  registerCommands,
   start,
   broadcastMessage,
 };
