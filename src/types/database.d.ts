@@ -1,3 +1,10 @@
+export type Entry<T extends object = {}> = ({ id: number } & T)[];
+
+// Database Fields
+export type Chat = Entry<{ telegramId }>;
+export type BroadcastList = Entry<{ userId: string }>;
+
 export interface Database {
-  broadcastList: { id: number; name: string }[];
+  chats: Chat;
+  broadcastList: BroadcastList;
 }
