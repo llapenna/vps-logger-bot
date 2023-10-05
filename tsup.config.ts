@@ -7,7 +7,6 @@ export default defineConfig({
   sourcemap: false,
   clean: true,
   target: 'node16',
-  minify: true,
   treeshake: true,
   dts: true,
   metafile: true,
