@@ -2,8 +2,7 @@ import { Context, Telegraf } from 'telegraf';
 
 import { BotCommandWithHandler } from '@/types/bot';
 import logger from '@/utils/logger';
-
-import { CHAT_WHITELIST } from './whitelist';
+import chats from '@/database/chats';
 
 const START: BotCommandWithHandler = {
   command: 'start',
@@ -33,10 +32,16 @@ const LOG: BotCommandWithHandler = {
     if (message) {
       const { id } = message.chat;
 
-      CHAT_WHITELIST.add(id);
-      ctx.reply(
-        `Chat with id"${id}" added to the whitelist! From now on you will receive all logs!`
-      );
+      chats
+        .add(id)
+        .then(() => {
+          ctx.reply(
+            `Chat with id "${id}" added to the whitelist! From now on you will receive all logs!`
+          );
+        })
+        .catch(() => {
+          ctx.reply(`Chat with id "${id}" was already added to the whitelist!`);
+        });
     } else {
       // Message couldn't be used to retrieve chat id
       logger.info("Message couldn't be used to retrieve chat id");
