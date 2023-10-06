@@ -17,6 +17,7 @@ const add = (telegramId: Chats[number]['telegramId']) => {
   db.data.chats.push({
     telegramId,
     broadcast: true,
+    vpsUsers: [],
   });
   logger.info(
     `User with telegramId "${telegramId}" added to the broadcast list!`
@@ -39,8 +40,30 @@ const getBroadcastList = () =>
 const getByTelegramId = (telegramId: Chats[number]['telegramId']) =>
   db.data.chats.find((chat) => chat.telegramId === telegramId);
 
+/**
+ * Add a VPS's user to a chat, working as a whitelist
+ * @param telegramId Telegram ID of the chat to update
+ * @param vpsUser VPS's user to add to add to the chat
+ */
+const addVpsUser = (
+  telegramId: Chats[number]['telegramId'],
+  vpsUser: string
+) => {
+  const chat = getByTelegramId(telegramId);
+
+  // Check if the chat is found
+  if (!chat) return Promise.reject();
+  // Check if the vps user was already added
+  if (chat.vpsUsers.includes(vpsUser)) return Promise.reject();
+
+  // Add the vps user to the chat object
+  chat.vpsUsers.push(vpsUser);
+  return db.write();
+};
+
 const chats = {
   add,
   getBroadcastList,
+  addVpsUser,
 };
 export default chats;
