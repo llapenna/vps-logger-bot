@@ -9,9 +9,6 @@ const LOG: BotCommandWithHandler = {
   description: 'Enables logging',
   handler: (ctx: Context) => {
     const { message } = ctx;
-    logger.info(
-      `Received '/log' command from ${message?.chat.type} (${message?.chat?.id}). Added to whitelist.`
-    );
     // Message received from a chat
     if (message) {
       const { id } = message.chat;
@@ -19,17 +16,15 @@ const LOG: BotCommandWithHandler = {
       chats
         .add(id)
         .then(() => {
-          ctx.reply(
-            `Chat with id "${id}" added to the whitelist! From now on you will receive all logs!`
-          );
+          ctx.reply(`Chat with id "${id}" added to the broadcast list!`);
         })
         .catch(() => {
-          ctx.reply(`Chat with id "${id}" was already added to the whitelist!`);
+          ctx.reply(`Chat with id "${id}" was already added to the list!`);
         });
     } else {
       // Message couldn't be used to retrieve chat id
       logger.info("Message couldn't be used to retrieve chat id");
-      ctx.reply(`Chat cannot be added to whitelist!`);
+      ctx.reply(`Chat cannot be added to broadcast list!`);
     }
   },
 };
