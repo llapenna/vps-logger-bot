@@ -2,26 +2,14 @@ import { Telegraf } from 'telegraf';
 
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
-import msg from '@/utils/message';
 import watcher from '@/watcher';
 
 import { addCommands } from './commands';
-import { CHAT_WHITELIST } from './whitelist';
 
 const bot = new Telegraf(BOT_TOKEN);
 
-/**
- * Sends the given message to all whitelisted users
- * @param message Message to be sent to whitelisted users
- */
-const broadcastMessage = async (message: string) => {
-  const processed = msg.process(message);
-  if (processed) {
-    for (const user of CHAT_WHITELIST.list) {
-      await bot.telegram.sendMessage(user, processed);
-    }
-  }
-};
+const sendMessage = (chatId: number, message: string) =>
+  bot.telegram.sendMessage(chatId, message);
 
 /**
  * Executes cleanup tasks and stops the bot when the process receives a signal
@@ -69,6 +57,8 @@ const start = () => {
 const controls = {
   registerCommands,
   start,
-  broadcastMessage,
+  message: {
+    send: sendMessage,
+  },
 };
 export default controls;
