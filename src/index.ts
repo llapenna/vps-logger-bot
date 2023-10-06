@@ -1,6 +1,7 @@
 import bot from '@/bot';
+import message from '@/bot/message';
 import watcher from '@/watcher';
-import database from '@/utils/database';
+import database from '@/database';
 
 (async () => {
   // Configure bot
@@ -12,7 +13,7 @@ import database from '@/utils/database';
   watcher.start(({ newLines }) => {
     if (newLines) {
       newLines.forEach((line) => {
-        bot.broadcastMessage(line);
+        message.broadcast(line);
       });
     }
   });
