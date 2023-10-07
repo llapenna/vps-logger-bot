@@ -1,5 +1,5 @@
 import bot from '@/bot';
-import message from '@/bot/message';
+import message from '@/message';
 import watcher from '@/watcher';
 import database from '@/database';
 
@@ -11,11 +11,7 @@ import database from '@/database';
 
   // Watch for changes in the file
   watcher.start(({ newLines }) => {
-    if (newLines) {
-      newLines.forEach((line) => {
-        message.broadcast(line);
-      });
-    }
+    message.process(newLines);
   });
 
   // Start bot
