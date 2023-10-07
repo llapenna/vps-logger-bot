@@ -3,13 +3,20 @@ import { Telegraf } from 'telegraf';
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
 import watcher from '@/watcher';
+import chats from '@/database/chats';
 
 import { addCommands } from './commands';
 
 const bot = new Telegraf(BOT_TOKEN);
-
-const sendMessage = (chatId: number, message: string) =>
-  bot.telegram.sendMessage(chatId, message);
+/**
+ * Sends a message to all chats in the broadcast list
+ * @param message Message to broadcast to all chats
+ */
+const broadcast = async (message: string) => {
+  chats
+    .getBroadcastList()
+    .forEach((chat) => bot.telegram.sendMessage(chat, message));
+};
 
 /**
  * Executes cleanup tasks and stops the bot when the process receives a signal
@@ -33,7 +40,7 @@ const handleSignal = async (
 };
 
 /**
- * Register commands and handlers
+ * Register commands and handlers, using the bot instance
  */
 const registerCommands = async () => {
   // Register handlers
@@ -57,8 +64,6 @@ const start = () => {
 const controls = {
   registerCommands,
   start,
-  message: {
-    send: sendMessage,
-  },
+  broadcast,
 };
 export default controls;
