@@ -66,9 +66,20 @@ const addVpsUser = async (
   return db.write();
 };
 
+/**
+ * Retreives a list of users that should receive broadcast messages from a given VPS user
+ * @param vpsUser VPS User to look for
+ * @returns A list of telegram IDs
+ */
+const getBroadcastListByVpsUser = (vpsUser: string) => {
+  const chats = db.data.chats.filter((chat) => chat.vpsUsers.includes(vpsUser));
+  return chats.map((chat) => chat.telegramId);
+};
+
 const chats = {
   add,
   getBroadcastList,
   addVpsUser,
+  getBroadcastListByVpsUser,
 };
 export default chats;
