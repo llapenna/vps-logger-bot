@@ -3,7 +3,6 @@ import { Telegraf } from 'telegraf';
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
 import watcher from '@/watcher';
-import chats from '@/database/chats';
 
 import { addCommands } from './commands';
 
@@ -12,10 +11,8 @@ const bot = new Telegraf(BOT_TOKEN);
  * Sends a message to all chats in the broadcast list
  * @param message Message to broadcast to all chats
  */
-const broadcast = async (message: string) => {
-  chats
-    .getBroadcastList()
-    .forEach((chat) => bot.telegram.sendMessage(chat, message));
+const broadcast = async (message: string, broadcastList: number[] = []) => {
+  broadcastList.forEach((chat) => bot.telegram.sendMessage(chat, message));
 };
 
 /**
