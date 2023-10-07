@@ -15,16 +15,12 @@ const LOG: BotCommandWithHandler = {
 
       chats
         .add(id)
-        .then(() => {
-          ctx.reply(`Chat with id "${id}" added to the broadcast list!`);
-        })
-        .catch(() => {
-          ctx.reply(`Chat with id "${id}" was already added to the list!`);
-        });
+        .then(() => ctx.reply(`Chat added to the broadcast list!`))
+        .catch(() => ctx.reply(`Chat couldn't be added to the list!`));
     } else {
       // Message couldn't be used to retrieve chat id
       logger.info("Message couldn't be used to retrieve chat id");
-      ctx.reply(`Chat cannot be added to broadcast list!`);
+      ctx.reply(`Error adding chat to the broadcast list!`);
     }
   },
 };
