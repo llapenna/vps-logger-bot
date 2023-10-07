@@ -3,11 +3,12 @@ import { Telegraf } from 'telegraf';
 import START from './start';
 import HELP from './help';
 import LOG from './log';
+import WHITELIST from './whitelist';
 
 /**
  * List of commands
  */
-const commands = [START, HELP, LOG];
+const commands = [START, HELP, LOG, WHITELIST];
 
 /**
  * Add list of commands to bot and their handlers
