@@ -83,10 +83,24 @@ const getBroadcastListByVpsUser = (vpsUser: string) => {
   );
 };
 
+/**
+ * Toggle broadcast flag for a given chat
+ * @param telegramId Telegram ID of the chat to update
+ */
+const toggleBroadcast = async (telegramId: number): Promise<boolean> => {
+  const chat = getByTelegramId(telegramId);
+  if (!chat) return Promise.reject();
+
+  chat.broadcast = !chat.broadcast;
+  await db.write();
+  return chat.broadcast;
+};
+
 const chats = {
   add,
   getBroadcastList,
   addVpsUser,
   getBroadcastListByVpsUser,
+  toggleBroadcast,
 };
 export default chats;
