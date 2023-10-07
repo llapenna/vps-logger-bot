@@ -72,8 +72,15 @@ const addVpsUser = async (
  * @returns A list of telegram IDs
  */
 const getBroadcastListByVpsUser = (vpsUser: string) => {
-  const chats = db.data.chats.filter((chat) => chat.vpsUsers.includes(vpsUser));
-  return chats.map((chat) => chat.telegramId);
+  return (
+    db.data.chats
+      // Remove users from broadcast list
+      .filter(({ broadcast }) => broadcast)
+      // Filter by vps user
+      .filter((chat) => chat.vpsUsers.includes(vpsUser))
+      // Get telegram IDs
+      .map((chat) => chat.telegramId)
+  );
 };
 
 const chats = {
