@@ -7,22 +7,25 @@ import { db } from '.';
  * Add a chat to the database
  * @param telegramId ID of the chat to add to the database
  */
-const add = (telegramId: Chats[number]['telegramId']) => {
-  // Check if the user was already added
-  if (getByTelegramId(telegramId)) {
-    logger.info(`User with telegramId "${telegramId}" already exists!`);
-    return Promise.reject();
-  }
-
-  db.data.chats.push({
+const add = async (telegramId: Chats[number]['telegramId']) => {
+  const data = {
     telegramId,
     broadcast: true,
     vpsUsers: [],
-  });
+  };
+
+  // Check if the user was already added
+  if (getByTelegramId(telegramId)) {
+    logger.info(`User with telegramId "${telegramId}" already exists!`);
+    return Promise.resolve(data);
+  }
+
+  db.data.chats.push(data);
   logger.info(
     `User with telegramId "${telegramId}" added to the broadcast list!`
   );
-  return db.write();
+  await db.write();
+  return data;
 };
 
 /**
@@ -45,16 +48,18 @@ const getByTelegramId = (telegramId: Chats[number]['telegramId']) =>
  * @param telegramId Telegram ID of the chat to update
  * @param vpsUser VPS's user to add to add to the chat
  */
-const addVpsUser = (
+const addVpsUser = async (
   telegramId: Chats[number]['telegramId'],
   vpsUser: string
 ) => {
-  const chat = getByTelegramId(telegramId);
+  let chat = getByTelegramId(telegramId);
 
-  // Check if the chat is found
-  if (!chat) return Promise.reject();
+  // If the chat cannot be found, add it to the database
+  if (!chat) {
+    chat = await add(telegramId);
+  }
   // Check if the vps user was already added
-  if (chat.vpsUsers.includes(vpsUser)) return Promise.reject();
+  if (chat.vpsUsers.includes(vpsUser)) return Promise.resolve();
 
   // Add the vps user to the chat object
   chat.vpsUsers.push(vpsUser);
