@@ -1,5 +1,5 @@
 import responses from '@/assets/response.json';
-import type { Response, ResponseToken } from '@/types/message';
+import type { Response, ResponseTokens } from '@/types/message';
 
 /**
  * Retreives the appropiate response based on the new line written in the file
@@ -35,11 +35,11 @@ const getTokensFromLine = (line: string, response: Response) => {
   const log = extractLogFromLine(line, response);
   if (!log) return null;
 
-  const tokens: ResponseToken[] = [];
+  const tokens: ResponseTokens = {} as ResponseTokens;
 
   // For each
   Object.entries(response.positions).forEach(([key, value]) => {
-    tokens.push({ token: key, value: log[value] });
+    tokens[key] = log[value];
   });
 
   return tokens;
@@ -50,7 +50,7 @@ const getTokensFromLine = (line: string, response: Response) => {
  * @param line File line to be processed. Also used to extract the tokens.
  * @returns The response message with the tokens replaced
  */
-export const replaceToken = (line: string) => {
+export const replaceTokens = (line: string) => {
   const response = getCorrectResponse(line);
   if (!response) return null;
 
@@ -58,8 +58,9 @@ export const replaceToken = (line: string) => {
   if (!tokens) return null;
 
   let replaced = response.message;
-  tokens.forEach(({ token, value }) => {
-    replaced = replaced.replace(`$${token}$`, value);
+
+  Object.entries(tokens).forEach(([key, value]) => {
+    replaced = replaced.replace(`$${key}$`, value);
   });
 
   return { replaced, tokens };
