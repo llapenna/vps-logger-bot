@@ -5,7 +5,7 @@ import { BotCommandWithHandler } from '@/types/bot';
 import logger from '@/utils/logger';
 
 const TOGGLE_LOG: BotCommandWithHandler = {
-  command: 'toggle-log',
+  command: 'toggle_log',
   description:
     'Toggles logging flag. If enabled, the bot will send you updates.',
   handler: (ctx: Context) => {
