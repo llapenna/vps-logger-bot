@@ -4,11 +4,12 @@ import START from './start';
 import HELP from './help';
 import LOG from './log';
 import WHITELIST from './whitelist';
+import TOGGLE_LOG from './toggle-log';
 
 /**
  * List of commands
  */
-const commands = [START, HELP, LOG, WHITELIST];
+const commands = [START, HELP, LOG, WHITELIST, TOGGLE_LOG];
 
 /**
  * Add list of commands to bot and their handlers
