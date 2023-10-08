@@ -3,7 +3,8 @@ import fs from 'node:fs';
 
 import type { WatcherCallback } from '@/types/watcher';
 import { LOGFILE_PATH } from '@/utils/config';
-import { getNewLines, initializeLines } from '@/utils/file';
+
+import { getNewLines, initLineCount } from './file';
 
 let watcher: chokidar.FSWatcher | null = null;
 
@@ -13,7 +14,7 @@ let watcher: chokidar.FSWatcher | null = null;
  */
 const start = (callback: WatcherCallback) => {
   // Store initial lines count
-  initializeLines(LOGFILE_PATH);
+  initLineCount(LOGFILE_PATH);
 
   // Initialize watcher
   watcher = chokidar.watch(LOGFILE_PATH, {

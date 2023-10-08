@@ -27,5 +27,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'no-console': ['warn', { allow: ['warn'] }],
+    '@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
   },
 };

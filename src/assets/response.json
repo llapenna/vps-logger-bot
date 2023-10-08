@@ -1,7 +1,7 @@
 [
   {
     "pattern": "Disconnected from invalid user ",
-    "response": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
+    "message": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
     "positions": {
       "user": 0,
       "ip": 1
@@ -10,7 +10,7 @@
   },
   {
     "pattern": "Connection closed by invalid user ",
-    "response": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
+    "message": "A failed attempt to access invalid user '$user$' was made from '$ip$'.",
     "positions": {
       "user": 0,
       "ip": 1
@@ -19,7 +19,7 @@
   },
   {
     "pattern": "Connection closed by authenticating user ",
-    "response": "A failed attempt to access user '$user$' was made from '$ip$'.",
+    "message": "A failed attempt to access user '$user$' was made from '$ip$'.",
     "positions": {
       "user": 0,
       "ip": 1
@@ -28,7 +28,7 @@
   },
   {
     "pattern": "Accepted publickey for ",
-    "response": "User '$user$' logged in from '$ip$'.",
+    "message": "User '$user$' logged in from '$ip$'.",
     "positions": {
       "user": 0,
       "ip": 2
@@ -37,7 +37,7 @@
   },
   {
     "pattern": "Disconnected from user ",
-    "response": "Authenticated user '$user$' from '$ip$' disconnected.",
+    "message": "Authenticated user '$user$' from '$ip$' disconnected.",
     "positions": {
       "user": 0,
       "ip": 1

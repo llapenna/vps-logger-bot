@@ -2,25 +2,17 @@ import { Telegraf } from 'telegraf';
 
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
-import msg from '@/utils/message';
 import watcher from '@/watcher';
 
 import { addCommands } from './commands';
-import { CHAT_WHITELIST } from './whitelist';
 
 const bot = new Telegraf(BOT_TOKEN);
-
 /**
- * Sends the given message to all whitelisted users
- * @param message Message to be sent to whitelisted users
+ * Sends a message to all chats in the broadcast list
+ * @param message Message to broadcast to all chats
  */
-const broadcastMessage = async (message: string) => {
-  const processed = msg.process(message);
-  if (processed) {
-    for (const user of CHAT_WHITELIST.list) {
-      await bot.telegram.sendMessage(user, processed);
-    }
-  }
+const broadcast = async (message: string, broadcastList: number[] = []) => {
+  broadcastList.forEach((chat) => bot.telegram.sendMessage(chat, message));
 };
 
 /**
@@ -45,9 +37,9 @@ const handleSignal = async (
 };
 
 /**
- * Register commands and handlers
+ * Register commands and handlers, using the bot instance
  */
-const register = async () => {
+const registerCommands = async () => {
   // Register handlers
   await addCommands(bot);
 };
@@ -67,8 +59,8 @@ const start = () => {
 };
 
 const controls = {
-  register,
+  registerCommands,
   start,
-  broadcastMessage,
+  broadcast,
 };
 export default controls;

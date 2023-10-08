@@ -6,19 +6,20 @@ import fs from 'node:fs';
 let lines: number = 0;
 
 /**
- * Get the number of lines in a string (preferably a file content)
- * @param content File content
+ * Get the number of lines within a file
+ * @param fileContents File content
  * @returns Lines count
  */
-export const getLinesCount = (content: string): number =>
-  content.split('\n').length;
+export const getLinesCount = (fileContents: string): number =>
+  fileContents.split('\n').length;
 
 /**
  * Initialize lines count variable
  * @param path Path to the file
  */
-export const initializeLines = (path: string) => {
-  lines = getLinesCount(fs.readFileSync(path, 'utf-8'));
+export const initLineCount = (path: string) => {
+  const file = fs.readFileSync(path, 'utf-8');
+  lines = getLinesCount(file);
 };
 
 /**
@@ -27,11 +28,11 @@ export const initializeLines = (path: string) => {
  * @returns New lines added to the file
  */
 export const getNewLines = (content: string): string[] => {
-  const newFileLinesCount = getLinesCount(content);
-  const diff = newFileLinesCount - lines;
+  const newLinesCount = getLinesCount(content);
+  const diff = newLinesCount - lines;
 
   // Store new lines count, even if lines were removed
-  lines = newFileLinesCount;
+  lines = newLinesCount;
   // Nothing changed or lines were removed
   if (diff <= 0) return [];
 
