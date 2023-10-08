@@ -23,3 +23,8 @@ export const BOT_TOKEN = checkVariable('BOT_TOKEN');
  * @description Path to the log file
  */
 export const LOGFILE_PATH = checkVariable('LOGFILE_PATH');
+
+/**
+ * @description Path to the project. Used to access local project files
+ */
+export const PROJECT_PATH = checkVariable('PROJECT_PATH');

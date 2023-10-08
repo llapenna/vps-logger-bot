@@ -1,9 +1,11 @@
+import path from 'node:path';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
 import { Database } from '@/types/database';
+import { PROJECT_PATH } from '@/utils/config';
 
-const PATH = './database.json';
+const PATH = path.join(PROJECT_PATH, 'database.json');
 const DEFAULT_DATA: Database = { chats: [] };
 
 // Configure lowdb to write data to JSON file
