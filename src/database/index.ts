@@ -1,25 +1,23 @@
-import path from 'node:path';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
 import { Database } from '@/types/database';
-import { PROJECT_PATH, NODE_ENV } from '@/utils/config';
+
+import { DEFAULT_DATA, DB_PATH, createDatabaseFile } from './utils';
 
 /**
  * Creates a Lowdb instance, depending on the node environment
  * @returns A JSON Lowdb instance
  */
-const createDb = () => {
+const initInstance = () => {
   // Generate file depending on environment
-  const fileName = `database.${NODE_ENV}.json`;
-  const PATH = path.join(PROJECT_PATH, fileName);
-  const DEFAULT: Database = { chats: [] };
+  createDatabaseFile(DEFAULT_DATA);
 
-  const adapter = new JSONFile<Database>(PATH);
-  return new Low<Database>(adapter, DEFAULT);
+  const adapter = new JSONFile<Database>(DB_PATH);
+  return new Low<Database>(adapter, DEFAULT_DATA);
 };
 
-export const db = createDb();
+export const db = initInstance();
 
 /**
  * Initializes the `db.data` object with
