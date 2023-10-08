@@ -28,3 +28,8 @@ export const LOGFILE_PATH = checkVariable('LOGFILE_PATH');
  * @description Path to the project. Used to access local project files
  */
 export const PROJECT_PATH = checkVariable('PROJECT_PATH');
+
+/**
+ * @description Node environment. Could be 'production' or 'development'.
+ */
+export const NODE_ENV = checkVariable('NODE_ENV');
