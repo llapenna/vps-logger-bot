@@ -22,7 +22,7 @@ export const addCommands = async (bot: Telegraf): Promise<void> => {
   // Then add handlers
   for (const cmd of commands) {
     const { command, handler } = cmd;
-    await bot.command(command, handler);
+    bot.command(command, handler);
   }
 };
 
