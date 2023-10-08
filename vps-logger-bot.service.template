@@ -6,6 +6,8 @@ After=network.target
 [Service]
 Type=simple
 
+# Path to the project root folder. Used to access local files
+Environment=PROJECT_PATH=_PROJECT_PATH
 # Path to the file to be used for logging
 Environment=LOGFILE_PATH=_LOGFILE_PATH
 # Bot token provided by Bot Father
