@@ -44,13 +44,13 @@ const getByTelegramId = (telegramId: Chat['telegramId']) =>
   db.data.chats.find((chat) => chat.telegramId === telegramId) ?? null;
 
 /**
- * Add a VPS's user to a chat, working as a whitelist
+ * Add multiple VPS's users to a chat entry, working as a whitelist
  * @param telegramId Telegram ID of the chat to update
- * @param vpsUser VPS's user to add to add to the chat
+ * @param vpsUsers VPS's array of users to add to add to the chat
  */
-const addVpsUser = async (
-  telegramId: Chats[number]['telegramId'],
-  vpsUser: string
+const addVpsUsers = async (
+  telegramId: Chat['telegramId'],
+  vpsUsers: string[]
 ) => {
   let chat = getByTelegramId(telegramId);
 
@@ -58,11 +58,13 @@ const addVpsUser = async (
   if (!chat) {
     chat = await add(telegramId);
   }
-  // Check if the vps user was already added
-  if (chat.vpsUsers.includes(vpsUser)) return Promise.resolve();
 
-  // Add the vps user to the chat object
-  chat.vpsUsers.push(vpsUser);
+  vpsUsers.forEach((user) => {
+    // Check if the vps user was already added
+    if (!hasVpsUser(chat!, user)) {
+      chat!.vpsUsers.push(user);
+    }
+  });
   return db.write();
 };
 
@@ -118,7 +120,7 @@ const hasVpsUser = (chat: number | Chat, vpsUser: string) => {
 const chats = {
   add,
   getBroadcastList,
-  addVpsUser,
+  addVpsUsers,
   getBroadcastListByVpsUser,
   toggleBroadcast,
   hasVpsUser,
