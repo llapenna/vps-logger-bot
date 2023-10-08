@@ -5,12 +5,6 @@ import { JSONFile } from 'lowdb/node';
 import { Database } from '@/types/database';
 import { PROJECT_PATH, NODE_ENV } from '@/utils/config';
 
-const PATH = path.join(PROJECT_PATH, 'database.json');
-const DEFAULT_DATA: Database = { chats: [] };
-
-// Configure lowdb to write data to JSON file
-const adapter = new JSONFile<Database>(PATH);
-
 /**
  * Creates a Lowdb instance, depending on the node environment
  * @returns A JSON Lowdb instance
@@ -23,7 +17,7 @@ const createDb = () => {
 
   const adapter = new JSONFile<Database>(PATH);
   return new Low<Database>(adapter, DEFAULT);
-}
+};
 
 export const db = createDb();
 
