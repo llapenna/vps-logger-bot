@@ -96,11 +96,31 @@ const toggleBroadcast = async (telegramId: number): Promise<boolean> => {
   return chat.broadcast;
 };
 
+/**
+ * Checks for a given chat if a given VPS user is in the whitelist
+ * @param chat Chat reference. Could be an ID (number) or a Chat (object)
+ * @param vpsUser User to check if is in the whitelist
+ * @returns `true` if the user is in the whitelist, `false` otherwise
+ */
+const hasVpsUser = (chat: number | Chat, vpsUser: string) => {
+  let object: Chat | null = null;
+  if (typeof chat === 'number') {
+    object = getByTelegramId(chat);
+
+    // Chat cannot be found
+    if (!object) return false;
+  } else object = chat;
+
+  // Now that we have the chat object, check if the vps user is in the whitelist
+  return object.vpsUsers.includes(vpsUser);
+};
+
 const chats = {
   add,
   getBroadcastList,
   addVpsUser,
   getBroadcastListByVpsUser,
   toggleBroadcast,
+  hasVpsUser,
 };
 export default chats;
