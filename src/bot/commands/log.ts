@@ -17,7 +17,7 @@ const LOG: BotCommandWithHandler = {
       chats
         .addVpsUsers(id, users)
         .then((users) =>
-          ctx.reply(`VPS user/s ${users} added to the whitelist!`)
+          ctx.reply(`VPS user/s '${users}' added to the whitelist!`)
         )
         .catch(() => ctx.reply(`Users couldn't be added to the list!`));
     } else {
