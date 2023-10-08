@@ -1,4 +1,4 @@
-import { Chats } from '@/types/database';
+import { Chat } from '@/types/database';
 import logger from '@/utils/logger';
 
 import { db } from '.';
@@ -7,7 +7,7 @@ import { db } from '.';
  * Add a chat to the database
  * @param telegramId ID of the chat to add to the database
  */
-const add = async (telegramId: Chats[number]['telegramId']) => {
+const add = async (telegramId: Chat['telegramId']) => {
   const data = {
     telegramId,
     broadcast: true,
@@ -40,8 +40,8 @@ const getBroadcastList = () =>
  * @param telegramId Telegram ID of the chat to retrieve
  * @returns Chat object
  */
-const getByTelegramId = (telegramId: Chats[number]['telegramId']) =>
-  db.data.chats.find((chat) => chat.telegramId === telegramId);
+const getByTelegramId = (telegramId: Chat['telegramId']) =>
+  db.data.chats.find((chat) => chat.telegramId === telegramId) ?? null;
 
 /**
  * Add a VPS's user to a chat, working as a whitelist
