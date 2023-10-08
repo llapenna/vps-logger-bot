@@ -65,7 +65,8 @@ const addVpsUsers = async (
       chat!.vpsUsers.push(user);
     }
   });
-  return db.write();
+  await db.write();
+  return vpsUsers;
 };
 
 /**
