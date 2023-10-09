@@ -2,8 +2,9 @@ import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
 import { Database } from '@/types/database';
+import defaultData from '@/assets/database_default.json';
 
-import { DEFAULT_DATA, DB_PATH, createDatabaseFile } from './utils';
+import { DB_PATH, createDatabaseFile } from './utils';
 
 /**
  * Creates a Lowdb instance, depending on the node environment
@@ -11,10 +12,10 @@ import { DEFAULT_DATA, DB_PATH, createDatabaseFile } from './utils';
  */
 const initInstance = () => {
   // Generate file depending on environment
-  createDatabaseFile(DEFAULT_DATA);
+  createDatabaseFile();
 
   const adapter = new JSONFile<Database>(DB_PATH);
-  return new Low<Database>(adapter, DEFAULT_DATA);
+  return new Low<Database>(adapter, defaultData);
 };
 
 export const db = initInstance();
