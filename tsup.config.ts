@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
+export default defineConfig(({ watch = false }) => ({
   entry: ['src/index.ts'],
   format: ['esm'],
   splitting: true,
@@ -10,7 +10,5 @@ export default defineConfig({
   treeshake: true,
   dts: true,
   metafile: true,
-  async onSuccess() {
-    console.log('\n');
-  },
-});
+  watch,
+}));
