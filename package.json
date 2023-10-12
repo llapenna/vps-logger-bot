@@ -4,9 +4,10 @@
   "description": "",
   "main": "./dist/index.mjs",
   "scripts": {
-    "build": "tsup src/index.ts",
+    "build": "tsup",
     "install-service": "dotenv scripts/install_service.sh",
     "start": "npm run build && dotenv node dist/index.mjs",
+    "dev": "tsup --watch --onSuccess 'dotenv node dist/index.mjs'",
     "release": "dotenv release-it ",
     "release:ci": "dotenv release-it --ci",
     "prepare": "husky install",
