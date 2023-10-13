@@ -3,6 +3,7 @@ import { Context } from 'telegraf';
 import chats from '@/database/chats';
 import { BotCommandWithHandler } from '@/types/bot';
 import { getArgs } from './utils';
+import logger from '@/utils/logger';
 
 const LOG: BotCommandWithHandler = {
   command: 'log',
@@ -22,7 +23,10 @@ const LOG: BotCommandWithHandler = {
         .catch(() => ctx.reply(`Users couldn't be added to the list!`));
     } else {
       // Message couldn't be used to retrieve chat id
-      ctx.reply(`Error adding chat to the broadcast list!`);
+      logger.info(
+        'Message cant be used to get chatId or no vps users were given.'
+      );
+      ctx.reply(`Error adding users to the broadcast list!`);
     }
   },
 };

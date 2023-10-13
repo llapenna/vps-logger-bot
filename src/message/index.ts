@@ -3,17 +3,22 @@ import chats from '@/database/chats';
 
 import { replaceTokens } from './lineProcessing';
 
-const process = (newLines: string[] | undefined) => {
+const process = async (newLines: string[] | undefined) => {
   if (newLines) {
-    newLines.forEach((line) => {
-      const processed = replaceTokens(line);
+    // Store each promise
+    const promises = newLines.map(async (line) => {
+      const processed = await replaceTokens(line);
       // If no information was extracted from the line, ignore it
       if (!processed) return;
 
-      const { replaced, tokens } = processed;
+      const { replaced, tokens, geolocation } = processed;
+
       const broadcastList = chats.getBroadcastListByVpsUser(tokens.user);
-      bot.broadcast(replaced, broadcastList);
+      bot.broadcast(replaced, broadcastList, geolocation);
     });
+
+    // Wait for all promises to resolve
+    await Promise.all(promises);
   }
 };
 

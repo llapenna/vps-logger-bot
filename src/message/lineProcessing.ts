@@ -1,5 +1,8 @@
 import responses from '@/assets/response.json';
 import type { Response, ResponseTokens } from '@/types/message';
+import geolocation from '@/services/geolocation';
+
+import { appendGeolocation } from './geolocation';
 
 /**
  * Retreives the appropiate response based on the new line written in the file
@@ -48,22 +51,25 @@ const getTokensFromLine = (line: string, response: Response) => {
 /**
  * Replaces a series of tokens extracted from the file line and constrcuts the response message
  * @param line File line to be processed. Also used to extract the tokens.
- * @returns The response message with the tokens replaced
+ * @returns The response message with the tokens replaced and the tokens themselves along the geolocation data
  */
-export const replaceTokens = (line: string) => {
+export const replaceTokens = async (line: string) => {
   const response = getCorrectResponse(line);
   if (!response) return null;
 
   const tokens = getTokensFromLine(line, response);
   if (!tokens) return null;
 
+  // Replace tokens into the text
   let replaced = response.message;
-
   Object.entries(tokens).forEach(([key, value]) => {
     replaced = replaced.replace(`$${key}$`, value);
   });
 
-  return { replaced, tokens };
+  const geolocationData = await geolocation.ipInfo(tokens.ip);
+  replaced = appendGeolocation(replaced, geolocationData);
+
+  return { replaced, tokens, geolocation: geolocationData };
 };
 
 /**
