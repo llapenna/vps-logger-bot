@@ -13,5 +13,4 @@ export type GeolocationResponse = {
   org: string;
   as: string;
   query: string;
-  flag: string;
 };
