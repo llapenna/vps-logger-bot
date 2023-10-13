@@ -5,6 +5,7 @@ import logger from '@/utils/logger';
 import watcher from '@/watcher';
 
 import { addCommands } from './commands';
+import { GeolocationResponse } from '@/types/geolocation';
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -12,10 +13,16 @@ const bot = new Telegraf(BOT_TOKEN);
  * Sends a message to all chats in the broadcast list
  * @param message Message to broadcast to all chats
  */
-const broadcast = async (message: string, broadcastList: number[] = []) => {
-  broadcastList.forEach((chat) =>
-    bot.telegram.sendMessage(chat, message, { parse_mode: 'Markdown' })
-  );
+const broadcast = async (
+  message: string,
+  broadcastList: number[] = [],
+  geolocation?: GeolocationResponse
+) => {
+  broadcastList.forEach((chat) => {
+    bot.telegram.sendMessage(chat, message, { parse_mode: 'HTML' });
+    if (geolocation)
+      bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
+  });
 };
 
 /**
