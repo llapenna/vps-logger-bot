@@ -7,6 +7,7 @@ import { GeolocationResponse } from '@/types/geolocation';
 
 import addCommands from './commands';
 import addButtons from './buttons';
+import IPCONFIRMATION from './buttons/ipConfirmation';
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -20,7 +21,12 @@ const broadcast = async (
   geolocation?: GeolocationResponse
 ) => {
   broadcastList.forEach((chat) => {
-    bot.telegram.sendMessage(chat, message, { parse_mode: 'HTML' });
+    bot.telegram.sendMessage(chat, message, {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [IPCONFIRMATION],
+      },
+    });
     if (geolocation)
       bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
   });
