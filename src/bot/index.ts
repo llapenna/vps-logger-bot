@@ -20,16 +20,23 @@ const broadcast = async (
   broadcastList: number[] = [],
   geolocation?: GeolocationResponse
 ) => {
-  broadcastList.forEach((chat) => {
-    bot.telegram.sendMessage(chat, message, {
-      parse_mode: 'HTML',
-      reply_markup: {
-        inline_keyboard: [IPCONFIRMATION],
-      },
-    });
-    if (geolocation)
+  if (geolocation) {
+    const buttons = IPCONFIRMATION(geolocation.query).map(
+      ({ callback_data, text }) => ({
+        callback_data,
+        text,
+      })
+    );
+    broadcastList.forEach((chat) => {
+      bot.telegram.sendMessage(chat, message, {
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [buttons],
+        },
+      });
       bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
-  });
+    });
+  }
 };
 
 /**

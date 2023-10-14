@@ -1,8 +1,18 @@
-import { Telegraf } from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 
 import IPCONFIRMATION from './ipConfirmation';
 
 const keyboards = [IPCONFIRMATION];
+
+/**
+ * Retrieves information from a callback data
+ * @param callbackData Callback data identifier
+ * @returns Handler name and data associated with the callback data
+ */
+const getCallbackInfo = (callbackData: string) => {
+  const [groupName, handler, data] = callbackData.split('/');
+  return { handlerName: `${groupName}/${handler}`, data };
+};
 
 /**
  * Finds and returns he handler associated with a callback data
@@ -10,10 +20,12 @@ const keyboards = [IPCONFIRMATION];
  * @returns Handler associated with the callback data
  */
 const findHandler = (callbackData: string) => {
+  const { handlerName, data } = getCallbackInfo(callbackData);
+
   for (const keyboard of keyboards) {
-    for (const button of keyboard) {
-      if (button.callback_data === callbackData) {
-        return button.handler;
+    for (const { callback_data, handler } of keyboard(data)) {
+      if (callback_data.includes(handlerName)) {
+        return (ctx: Context) => handler(ctx, data);
       }
     }
   }
