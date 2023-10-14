@@ -14,7 +14,7 @@ const commands = [START, HELP, LOG, TOGGLE_LOG];
  * Add list of commands to bot and their handlers
  * @param bot Bot instance
  */
-export const addCommands = async (bot: Telegraf): Promise<void> => {
+const addCommands = async (bot: Telegraf): Promise<void> => {
   // First add all commands
   await bot.telegram.setMyCommands(commands);
 
@@ -25,4 +25,4 @@ export const addCommands = async (bot: Telegraf): Promise<void> => {
   }
 };
 
-export default commands;
+export default addCommands;

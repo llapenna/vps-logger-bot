@@ -3,9 +3,10 @@ import { Telegraf } from 'telegraf';
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
 import watcher from '@/watcher';
-
-import { addCommands } from './commands';
 import { GeolocationResponse } from '@/types/geolocation';
+
+import addCommands from './commands';
+import addButtons from './buttons';
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -52,6 +53,8 @@ const handleSignal = async (
 const registerActions = async () => {
   // Register handlers
   await addCommands(bot);
+  // Register button callback handlers
+  await addButtons(bot);
 };
 
 /**
