@@ -5,7 +5,7 @@ import database from '@/database';
 
 (async () => {
   // Configure bot
-  await bot.registerCommands();
+  await bot.registerActions();
   // Initialize database by reading the JSON file
   await database.init();
 
