@@ -8,10 +8,11 @@ import { db } from '.';
  * @param telegramId ID of the chat to add to the database
  */
 const add = async (telegramId: Chat['telegramId']) => {
-  const data = {
+  const data: Chat = {
     telegramId,
     broadcast: true,
     vpsUsers: [],
+    whitelistedIps: [],
   };
 
   // Check if the user was already added
