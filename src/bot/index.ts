@@ -27,14 +27,14 @@ const broadcast = async (
         text,
       })
     );
-    broadcastList.forEach((chat) => {
-      bot.telegram.sendMessage(chat, message, {
+    broadcastList.forEach(async (chat) => {
+      await bot.telegram.sendMessage(chat, message, {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [buttons],
         },
       });
-      bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
+      await bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
     });
   }
 };
