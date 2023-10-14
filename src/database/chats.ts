@@ -119,6 +119,19 @@ const hasVpsUser = (chat: number | Chat, vpsUser: string) => {
   return object.vpsUsers.includes(vpsUser);
 };
 
+/**
+ * Add an IP to the whitelist of a given chat
+ * @param telegramId Telegram ID of the chat to update
+ * @param ip IP to add to the whitelist
+ */
+const whitelistIp = (telegramId: number, ip: string) => {
+  const chat = getByTelegramId(telegramId);
+  if (!chat) return Promise.reject();
+
+  chat.whitelistedIps.push(ip);
+  return db.write();
+};
+
 const chats = {
   add,
   getBroadcastList,
@@ -126,5 +139,6 @@ const chats = {
   getBroadcastListByVpsUser,
   toggleBroadcast,
   hasVpsUser,
+  whitelistIp,
 };
 export default chats;
