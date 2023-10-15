@@ -8,10 +8,11 @@ import { db } from '.';
  * @param telegramId ID of the chat to add to the database
  */
 const add = async (telegramId: Chat['telegramId']) => {
-  const data = {
+  const data: Chat = {
     telegramId,
     broadcast: true,
     vpsUsers: [],
+    whitelistedIps: [],
   };
 
   // Check if the user was already added
@@ -74,11 +75,13 @@ const addVpsUsers = async (
  * @param vpsUser VPS User to look for
  * @returns A list of telegram IDs
  */
-const getBroadcastListByVpsUser = (vpsUser: string) => {
+const getBroadcastListByVpsUser = (vpsUser: string, ip: string) => {
   return (
     db.data.chats
-      // Remove users from broadcast list
+      // Remove users whose broadcast flag is false
       .filter(({ broadcast }) => broadcast)
+      // Remove whitelisted IPS
+      .filter(({ whitelistedIps }) => !whitelistedIps.includes(ip))
       // Filter by vps user
       .filter((chat) => chat.vpsUsers.includes(vpsUser))
       // Get telegram IDs
@@ -118,6 +121,30 @@ const hasVpsUser = (chat: number | Chat, vpsUser: string) => {
   return object.vpsUsers.includes(vpsUser);
 };
 
+/**
+ * Add an IP to the whitelist of a given chat
+ * @param telegramId Telegram ID of the chat to update
+ * @param ip IP to add to the whitelist
+ */
+const whitelistIp = (telegramId: number, ip: string) => {
+  const chat = getByTelegramId(telegramId);
+  if (!chat) {
+    logger.info(`Chat ${telegramId} not found! Couldn't whitelist IP ${ip}.`);
+    return Promise.reject();
+  }
+
+  // Check if the IP was already added
+  if (chat.whitelistedIps.includes(ip)) {
+    logger.info(`IP ${ip} already whitelisted for chat ${telegramId}.`);
+    return Promise.resolve();
+  }
+
+  logger.info(`Whitelisting IP ${ip} for chat ${telegramId}.`);
+
+  chat.whitelistedIps.push(ip);
+  return db.write();
+};
+
 const chats = {
   add,
   getBroadcastList,
@@ -125,5 +152,6 @@ const chats = {
   getBroadcastListByVpsUser,
   toggleBroadcast,
   hasVpsUser,
+  whitelistIp,
 };
 export default chats;

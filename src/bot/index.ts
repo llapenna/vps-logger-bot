@@ -3,9 +3,11 @@ import { Telegraf } from 'telegraf';
 import { BOT_TOKEN } from '@/utils/config';
 import logger from '@/utils/logger';
 import watcher from '@/watcher';
-
-import { addCommands } from './commands';
 import { GeolocationResponse } from '@/types/geolocation';
+
+import addCommands from './commands';
+import addButtons from './buttons';
+import IPCONFIRMATION from './buttons/ipConfirmation';
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -18,11 +20,18 @@ const broadcast = async (
   broadcastList: number[] = [],
   geolocation?: GeolocationResponse
 ) => {
-  broadcastList.forEach((chat) => {
-    bot.telegram.sendMessage(chat, message, { parse_mode: 'HTML' });
-    if (geolocation)
-      bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
-  });
+  if (geolocation) {
+    const buttons = IPCONFIRMATION.buttons(geolocation.query);
+    broadcastList.forEach(async (chat) => {
+      await bot.telegram.sendMessage(chat, message, {
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [buttons],
+        },
+      });
+      await bot.telegram.sendLocation(chat, geolocation.lat, geolocation.lon);
+    });
+  }
 };
 
 /**
@@ -49,9 +58,11 @@ const handleSignal = async (
 /**
  * Register commands and handlers, using the bot instance
  */
-const registerCommands = async () => {
+const registerActions = async () => {
   // Register handlers
   await addCommands(bot);
+  // Register button callback handlers
+  await addButtons(bot);
 };
 
 /**
@@ -69,7 +80,7 @@ const start = () => {
 };
 
 const controls = {
-  registerCommands,
+  registerActions,
   start,
   broadcast,
 };
