@@ -71,12 +71,3 @@ export const replaceTokens = async (line: string) => {
 
   return { replaced, tokens, geolocation: geolocationData };
 };
-
-/**
- * Validates if the message is valid
- * @param message Message to be validated
- * @returns `true` if the message is valid, `false` otherwise
- */
-// const isValid = (message: Context['message']) => {
-//   return !!message && 'text' in message;
-// };
