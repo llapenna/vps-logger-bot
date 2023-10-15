@@ -21,12 +21,7 @@ const broadcast = async (
   geolocation?: GeolocationResponse
 ) => {
   if (geolocation) {
-    const buttons = IPCONFIRMATION(geolocation.query).map(
-      ({ callback_data, text }) => ({
-        callback_data,
-        text,
-      })
-    );
+    const buttons = IPCONFIRMATION.buttons(geolocation.query);
     broadcastList.forEach(async (chat) => {
       await bot.telegram.sendMessage(chat, message, {
         parse_mode: 'HTML',
