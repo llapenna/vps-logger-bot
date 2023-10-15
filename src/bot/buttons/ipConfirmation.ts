@@ -1,18 +1,13 @@
 import { KeyboardWithHandler } from '@/types/bot';
+import { button } from './utils';
+import logger from '@/utils/logger';
 
-const IPCONFIRMATION: KeyboardWithHandler = (data) => [
-  {
-    text: 'It was me',
-    callback_data: `ipConfirmation/yes/${data}`,
-    handler: (ctx, ip) => {
-      console.log(ctx.callbackQuery, ip);
-    },
+const keyboard: KeyboardWithHandler = {
+  buttons: (data) => [button('It was me', `ipConfirmation/yes/${data}`)],
+  handlerId: 'ipConfirmation',
+  handler: (_, params) => {
+    logger.info(params);
   },
-  {
-    text: "It wasn't me",
-    callback_data: `ipConfirmation/no/${data}`,
-    handler: () => {},
-  },
-];
+};
 
-export default IPCONFIRMATION;
+export default keyboard;

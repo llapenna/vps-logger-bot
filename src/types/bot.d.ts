@@ -5,8 +5,8 @@ export type BotCommandWithHandler = BotCommand & {
   handler: (ctx: Context) => void;
 };
 
-export type KeyboardWithHandler = (
-  data: string
-) => (InlineKeyboardButton.CallbackButton & {
-  handler: (ctx: Context, data: string) => void;
-})[];
+export type KeyboardWithHandler = {
+  buttons: (data: string) => InlineKeyboardButton.CallbackButton[];
+  handlerId: string;
+  handler: (ctx: Context, params: string[]) => void;
+};
