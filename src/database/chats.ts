@@ -57,6 +57,9 @@ const addVpsUsers = async (
 
   // If the chat cannot be found, add it to the database
   if (!chat) {
+    logger.info(
+      `Cannot add VPS User to chat ${telegramId}, chat not found! Creating it...`
+    );
     chat = await add(telegramId);
   }
 
@@ -66,6 +69,10 @@ const addVpsUsers = async (
       chat!.vpsUsers.push(user);
     }
   });
+
+  logger.info(
+    `Added VPS Users [${vpsUsers.join(', ')}] to chat ${telegramId}.`
+  );
   await db.write();
   return vpsUsers;
 };
@@ -95,9 +102,16 @@ const getBroadcastListByVpsUser = (vpsUser: string, ip: string) => {
  */
 const toggleBroadcast = async (telegramId: number): Promise<boolean> => {
   const chat = getByTelegramId(telegramId);
-  if (!chat) return Promise.reject();
+  if (!chat) {
+    logger.info(`Chat ${telegramId} not found! Couldn't toggle broadcast.`);
+    return Promise.reject();
+  }
 
   chat.broadcast = !chat.broadcast;
+  logger.info(
+    `Toggling broadcast flag for chat ${telegramId}. New value: ${chat.broadcast}`
+  );
+
   await db.write();
   return chat.broadcast;
 };
