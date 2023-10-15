@@ -19,6 +19,8 @@ const addButtons = (bot: Telegraf) => {
         // Remove the empty string at the beginning
         .slice(1);
 
+      // Hide the buttons after the user clicks on one of them
+      ctx.editMessageReplyMarkup(undefined);
       handler(ctx, params);
     });
   }
