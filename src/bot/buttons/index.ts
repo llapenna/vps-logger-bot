@@ -2,6 +2,7 @@ import { Telegraf } from 'telegraf';
 
 import IPCONFIRMATION from './ipConfirmation';
 import { handlerRegex } from './utils';
+import logger from '@/utils/logger';
 
 const keyboards = [IPCONFIRMATION];
 
@@ -24,5 +25,6 @@ const addButtons = (bot: Telegraf) => {
       handler(ctx, params);
     });
   }
+  logger.info(`Added handler for ${keyboards.length} keyboards!`);
 };
 export default addButtons;
