@@ -1,12 +1,34 @@
 import { KeyboardWithHandler } from '@/types/bot';
-import { button } from './utils';
+import chats from '@/database/chats';
 import logger from '@/utils/logger';
 
+import { button } from './utils';
+
 const keyboard: KeyboardWithHandler = {
-  buttons: (data) => [button('It was me', `ipConfirmation/yes/${data}`)],
+  buttons: (data) => [
+    button('It was me', `ipConfirmation/yes/${data}`),
+    button('It was not me', 'ipConfirmation/no'),
+  ],
   handlerId: 'ipConfirmation',
-  handler: (_, params) => {
-    logger.info(params);
+  handler: (ctx, params) => {
+    const [confirmation, ip] = params;
+    const message = ctx.callbackQuery?.message;
+    const id = message ? message.chat.id : null;
+
+    if (!id) {
+      ctx.reply('Error getting chat id, cannot make changes!');
+      logger.info('Error getting chat id, cannot make changes! Received:', id);
+      return;
+    }
+
+    if (confirmation === 'yes') {
+      chats
+        .whitelistIp(id, ip)
+        .then(() => ctx.reply('IP confirmed and whitelisted!'))
+        .catch(() => ctx.reply('Error confirming IP!'));
+    } else {
+      // TODO: ban ip from the vps
+    }
   },
 };
 
