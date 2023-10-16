@@ -36,6 +36,15 @@
     "example": "Sep 28 19:47:33 ... sshd[...]: Accepted publickey for $user$ from $ip$ port ... ssh2: ED25519 SHA256:..."
   },
   {
+    "pattern": "Accepted password for ",
+    "message": "User '<b>$user$</b>' logged in from $ip$.",
+    "positions": {
+      "user": 0,
+      "ip": 2
+    },
+    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from 190.123.90.214 port 42958 ssh2"
+  },
+  {
     "pattern": "Disconnected from user ",
     "message": "Authenticated user '<b>$user$</b>' from $ip$ disconnected.",
     "positions": {
