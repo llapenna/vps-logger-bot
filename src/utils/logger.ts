@@ -14,9 +14,7 @@ const prefix = (type: keyof typeof priorities) =>
  * @param args Same arguments as `console.log`
  */
 function info(...args: any[]) {
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(prefix('INFO'), ...args);
-  }
+  console.log(prefix('INFO'), ...args);
 }
 
 /**

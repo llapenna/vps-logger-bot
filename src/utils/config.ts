@@ -8,7 +8,10 @@ import logger from '@/utils/logger';
 function checkVariable(identifier: string) {
   const variable = process.env[identifier];
 
-  logger.info(`Checking:\t${identifier} = '${variable}'`);
+  // Only log environment variables on development mode
+  if (process.env.NODE_ENV === 'development')
+    logger.info(`Checking:\t${identifier} = '${variable}'`);
+
   if (typeof variable === 'undefined') {
     throw new Error(`Environment variable "${identifier}" is not defined.`);
   } else return variable;
