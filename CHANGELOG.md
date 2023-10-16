@@ -1,5 +1,35 @@
 
 
+# [1.2.0](https://github.com/llapenna/vps-logger-bot/compare/1.1.0...1.2.0) (2023-10-16)
+
+
+### Bug Fixes
+
+* add async/await to message and location broadcasting ([5791a3e](https://github.com/llapenna/vps-logger-bot/commit/5791a3ef71a9dd7f2bab7933bae06db3ba4405a1))
+* log env variable checking only in dev mode ([23f2391](https://github.com/llapenna/vps-logger-bot/commit/23f23916efe9ae0416beec11a89be328172bc98f))
+* log geolocation fetching information ([7987baf](https://github.com/llapenna/vps-logger-bot/commit/7987baf73fb17f1e6a64acd49a27d340d59bfc08))
+* update usage of inline keyboard generation ([ede89be](https://github.com/llapenna/vps-logger-bot/commit/ede89be5bcd70313731bc75d56bc8dfcad3e8e10))
+
+
+### Features
+
+* add button handler to main registering function ([2e80deb](https://github.com/llapenna/vps-logger-bot/commit/2e80debf46866d937abf6d85075c6dd1efe6c36d))
+* add data to each button callback ([25e1b60](https://github.com/llapenna/vps-logger-bot/commit/25e1b602b3cffda7d910a2c2e2047ecac7334916))
+* add inline keyboard typing ([75e9445](https://github.com/llapenna/vps-logger-bot/commit/75e9445cb967360f08bc0e40bd257abe16d7a11a))
+* add ip confirmation buttons ([e139d43](https://github.com/llapenna/vps-logger-bot/commit/e139d430814ec01693ed1d7989d16fd7414e9b6b))
+* add logging to db methods ([472f0e5](https://github.com/llapenna/vps-logger-bot/commit/472f0e51b21516ce072178423dd3ef61ffbe78d0))
+* add whitelist ip push to chat database methods ([609f9d3](https://github.com/llapenna/vps-logger-bot/commit/609f9d3a42aad7a96f100035eb3130347d0d25a1))
+* add whitelist ips to the database ([0769798](https://github.com/llapenna/vps-logger-bot/commit/0769798d31be05b3188662206d505ce1aeda5462))
+* create generic button callback handler ([4123a8a](https://github.com/llapenna/vps-logger-bot/commit/4123a8afc170ad12835234932965e3b14e6320ab))
+* improve confirmation keyboard ([81e3862](https://github.com/llapenna/vps-logger-bot/commit/81e3862ea6888707519ac7150b839ea0a3a10a9c))
+* improve logging in chat whitelist IP method ([5ed863b](https://github.com/llapenna/vps-logger-bot/commit/5ed863b15c5ce3db2f14f0274c4ec8fd688ffdf5))
+* improve logging to bot button handlers ([8da36d4](https://github.com/llapenna/vps-logger-bot/commit/8da36d4403ef3b49de69caa0f3c3c272589caa14))
+* improve logging to bot command methods ([56d10b7](https://github.com/llapenna/vps-logger-bot/commit/56d10b78fdfb790fd0d8db0f1580b0ebef318fc6))
+* improve logging to broadcast methods ([fdea1f2](https://github.com/llapenna/vps-logger-bot/commit/fdea1f2468f1f52cf41515d16e0a6d90d794c287))
+* remove inline keyboard after being clicked ([be70582](https://github.com/llapenna/vps-logger-bot/commit/be705828fa702763fffeab932697af36611117dd))
+* send confirmation buttons to broadcasted messages ([fc5885a](https://github.com/llapenna/vps-logger-bot/commit/fc5885a50e84b7b11a30d1989b25c56bcf94add1))
+* use ip in getBroadcastList method ([dfd6b9b](https://github.com/llapenna/vps-logger-bot/commit/dfd6b9b6935c4279041eba3bd996d19a8a24a48b))
+
 # [1.1.0](https://github.com/llapenna/vps-logger-bot/compare/1.0.0...1.1.0) (2023-10-13)
 
 
