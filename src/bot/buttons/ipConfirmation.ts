@@ -17,7 +17,10 @@ const keyboard: KeyboardWithHandler = {
 
     if (!id) {
       ctx.reply('Error getting chat id, cannot make changes!');
-      logger.info('Error getting chat id, cannot make changes! Received:', id);
+      logger.info(
+        'Error getting chat id, cannot make changes! Message received:',
+        message
+      );
       return;
     }
 

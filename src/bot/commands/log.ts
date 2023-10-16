@@ -24,7 +24,8 @@ const LOG: BotCommandWithHandler = {
     } else {
       // Message couldn't be used to retrieve chat id
       logger.info(
-        'Message cant be used to get chatId or no vps users were given.'
+        'Message cant be used to get chatId or no vps users were given. Message received:',
+        ctx.message
       );
       ctx.reply(`Error adding users to the broadcast list!`);
     }

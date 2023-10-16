@@ -22,6 +22,10 @@ const broadcast = async (
 ) => {
   if (geolocation) {
     const buttons = IPCONFIRMATION.buttons(geolocation.query);
+
+    logger.info(
+      `Sending broadcast message with geolocation to ${broadcastList.length} chats.`
+    );
     broadcastList.forEach(async (chat) => {
       await bot.telegram.sendMessage(chat, message, {
         parse_mode: 'HTML',

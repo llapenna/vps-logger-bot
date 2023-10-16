@@ -1,5 +1,7 @@
 import { Telegraf } from 'telegraf';
 
+import logger from '@/utils/logger';
+
 import START from './start';
 import HELP from './help';
 import LOG from './log';
@@ -23,6 +25,8 @@ const addCommands = async (bot: Telegraf): Promise<void> => {
     const { command, handler } = cmd;
     bot.command(command, handler);
   }
+
+  logger.info(`Added ${commands.length} commands to bot!`);
 };
 
 export default addCommands;

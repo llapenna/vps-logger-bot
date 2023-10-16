@@ -20,7 +20,10 @@ const TOGGLE_LOG: BotCommandWithHandler = {
         .catch(() => ctx.reply(`Broadcast couldn't be toggled`));
     } else {
       // Message couldn't be used to retrieve chat id
-      logger.info("Message couldn't be used to retrieve chat id");
+      logger.info(
+        "Message couldn't be used to retrieve chat id. Message received:",
+        ctx.message
+      );
       ctx.reply(`Error toggling broadcast feature!`);
     }
   },
