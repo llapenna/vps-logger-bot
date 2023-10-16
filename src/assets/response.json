@@ -18,6 +18,15 @@
     "example": "Sep 28 21:12:00 ... sshd[166101]: Connection closed by invalid user $user$ $ip$ port ... [preauth]"
   },
   {
+    "pattern": "Failed password for ",
+    "message": "A failed attempt to access user '<b>$user$</b>' was made from $ip$.",
+    "positions": {
+      "user": 0,
+      "ip": 2
+    },
+    "example": "Oct 15 20:54:49 ... sshd[...]: Failed password for $user$ from $ip$ port ... ssh2"
+  },
+  {
     "pattern": "Connection closed by authenticating user ",
     "message": "A failed attempt to access user '<b>$user$</b>' was made from $ip$.",
     "positions": {
@@ -42,7 +51,7 @@
       "user": 0,
       "ip": 2
     },
-    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from ... port ... ssh2"
+    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from $ip$ port ... ssh2"
   },
   {
     "pattern": "Disconnected from user ",
