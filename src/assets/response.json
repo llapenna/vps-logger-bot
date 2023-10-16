@@ -6,7 +6,7 @@
       "user": 0,
       "ip": 1
     },
-    "example": "Sep 28 20:54:59 ... sshd[166101]: Disconnected from invalid user <b>$user$</b> $ip$ port ... [preauth]"
+    "example": "Sep 28 20:54:59 ... sshd[166101]: Disconnected from invalid user $user$ $ip$ port ... [preauth]"
   },
   {
     "pattern": "Connection closed by invalid user ",
@@ -15,7 +15,16 @@
       "user": 0,
       "ip": 1
     },
-    "example": "Sep 28 21:12:00 ... sshd[166101]: Connection closed by invalid user <b>$user$</b> $ip$ port ... [preauth]"
+    "example": "Sep 28 21:12:00 ... sshd[166101]: Connection closed by invalid user $user$ $ip$ port ... [preauth]"
+  },
+  {
+    "pattern": "Failed password for ",
+    "message": "A failed attempt to access user '<b>$user$</b>' was made from $ip$.",
+    "positions": {
+      "user": 0,
+      "ip": 2
+    },
+    "example": "Oct 15 20:54:49 ... sshd[...]: Failed password for $user$ from $ip$ port ... ssh2"
   },
   {
     "pattern": "Connection closed by authenticating user ",
@@ -24,7 +33,7 @@
       "user": 0,
       "ip": 1
     },
-    "example": "Sep 28 21:13:06 ... sshd[...]: Connection closed by authenticating user <b>$user$</b> $ip$ port ... [preauth]"
+    "example": "Sep 28 21:13:06 ... sshd[...]: Connection closed by authenticating user $user$ $ip$ port ... [preauth]"
   },
   {
     "pattern": "Accepted publickey for ",
@@ -33,7 +42,16 @@
       "user": 0,
       "ip": 2
     },
-    "example": "Sep 28 19:47:33 ... sshd[...]: Accepted publickey for <b>$user$</b> from $ip$ port ... ssh2: ED25519 SHA256:..."
+    "example": "Sep 28 19:47:33 ... sshd[...]: Accepted publickey for $user$ from $ip$ port ... ssh2: ED25519 SHA256:..."
+  },
+  {
+    "pattern": "Accepted password for ",
+    "message": "User '<b>$user$</b>' logged in from $ip$.",
+    "positions": {
+      "user": 0,
+      "ip": 2
+    },
+    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from $ip$ port ... ssh2"
   },
   {
     "pattern": "Disconnected from user ",
@@ -42,6 +60,6 @@
       "user": 0,
       "ip": 1
     },
-    "example": "Sep 28 19:47:28 ... sshd[...]: Disconnected from user <b>$user$</b> $ip$ port ..."
+    "example": "Sep 28 19:47:28 ... sshd[...]: Disconnected from user $user$ $ip$ port ..."
   }
 ]
