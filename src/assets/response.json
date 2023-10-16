@@ -42,7 +42,7 @@
       "user": 0,
       "ip": 2
     },
-    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from 190.123.90.214 port 42958 ssh2"
+    "example": "Oct 15 16:22:46 ... sshd[...]: Accepted password for $user$ from ... port ... ssh2"
   },
   {
     "pattern": "Disconnected from user ",
